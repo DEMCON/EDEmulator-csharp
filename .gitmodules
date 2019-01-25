@@ -1,0 +1,3 @@
+[submodule "EDApplication-csharp"]
+	path = EDApplication-csharp
+	url = https://github.com/demcon/EDApplication-csharp
