@@ -11,7 +11,7 @@ The emulator now emulates a unreleased embedded debugger protocol. This emulator
 More info can be found in the ApplicationInformation document https://github.com/DEMCON/EDApplication-csharp/blob/master/ApplicationInformation.pdf
 
 TODO:
-[] rework to released debug protocol.
-[] Make the application more stable.
-[] Make a doxygen output for the brances
-[] Auto compile after commit with Appveyor
+- [ ] rework to released debug protocol.
+- [ ] Make the application more stable.
+- [ ] Make a doxygen output for the brances
+- [ ] Auto compile after commit with Appveyor
