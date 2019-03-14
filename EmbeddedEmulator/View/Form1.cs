@@ -15,22 +15,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using EmbeddedDebugger.Connectors.Interfaces;
+using EmbeddedDebugger.DebugProtocol;
+using EmbeddedDebugger.DebugProtocol.Enums;
+using EmbeddedDebugger.DebugProtocol.Messages;
+using EmbeddedDebugger.DebugProtocol.RegisterValues;
+using EmbeddedEmulator.Model;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using EmbeddedDebugger.Connectors.Interfaces;
-using System.Diagnostics;
-using EmbeddedDebugger.DebugProtocol.Messages;
-using EmbeddedDebugger.DebugProtocol;
-using System.Drawing;
-using EmbeddedEmulator.Model;
-using EmbeddedDebugger.DebugProtocol.Enums;
-using EmbeddedDebugger.DebugProtocol.RegisterValues;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace EmbeddedEmulator.View
 {
@@ -153,11 +151,11 @@ namespace EmbeddedEmulator.View
 
         private void SendVersionButton_Click(object sender, EventArgs e)
         {
-            connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetVersionMessage(0x00, embeddedConfig, 0x01)));
+            connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetVersionMessage(0x00, embeddedConfig, 0x00)));
         }
         private void SendInfoButton_Click(object sender, EventArgs e)
         {
-            connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetInfoMessage(0x00, 0x01)));
+            connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetInfoMessage(0x00, 0x00)));
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -245,12 +243,10 @@ namespace EmbeddedEmulator.View
 
         private void FillConfig()
         {
-            embeddedConfig.CpuName = "Foitn";
+            embeddedConfig.CpuName = "Embedded Debugger";
             embeddedConfig.ApplicationVersion = new Version(0, 0, 1);
-            embeddedConfig.ProtocolVersion = new Version(1, 0, 0);
+            embeddedConfig.ProtocolVersion = new Version(0, 0, 7);
             embeddedConfig.SerialNumber = "0.1.2.3.4";
-            embeddedConfig.ReadRegisters.Add(
-                new Register(0, "myString", ReadWrite.ReadWrite, VariableType.String, Source.ElfParsed, 0, 0, 0) { Value = new RegisterValueString() { ValueByteArray = Encoding.UTF8.GetBytes("SomeString") } });
             //embeddedConfig.ReadRegisters.Add(
             //    new Register(1, "myBlob", ReadWrite.ReadWrite, VariableType.Blob, Source.ElfParsed, 0, 1, 0) { Value = new RegisterValueBlob() { ValueByteArray = (byte[])(new ImageConverter()).ConvertTo(Image.FromFile(@"C:/Temp/TestImage.jpg"), typeof(byte[])) } });
             embeddedConfig.ReadRegisters.Add(
@@ -315,6 +311,11 @@ namespace EmbeddedEmulator.View
         private void StringTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void PlaceConfigButton_Click(object sender, EventArgs e)
+        {
+            EmbeddedConfig.PlaceConfigAsXML(embeddedConfig);
         }
     }
 }

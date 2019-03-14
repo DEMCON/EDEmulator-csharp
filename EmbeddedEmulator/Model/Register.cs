@@ -57,6 +57,13 @@ namespace EmbeddedEmulator.Model
         public byte? DebugChannel { get => debugChannel; set => debugChannel = value; }
         public bool IsDebugChannel { get => debugChannel.HasValue; }
         public ChannelMode ChannelMode { get => channelMode; set => channelMode = value; }
+        public string VariableTypeName
+        {
+            get
+            {
+                return variableType.ToString().ToLower();
+            }
+        }
         #endregion
 
         #region Constructors

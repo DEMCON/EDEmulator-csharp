@@ -86,6 +86,7 @@ namespace EmbeddedEmulator.Model
                 AutoReset = true
             };
             timer.Elapsed += Timer_Elapsed;
+            timer.Start();
         }
 
         ~DebugProtocol()
@@ -168,7 +169,7 @@ namespace EmbeddedEmulator.Model
             }
             else
             {
-                connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetReadChannelDataMessage(data.ToArray(), 0x01)));
+                connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetReadChannelDataMessage(data.ToArray(), 0x00)));
             }
 
         }
@@ -208,7 +209,7 @@ namespace EmbeddedEmulator.Model
                                     connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetVersionMessage(msg.MsgID, embeddedConfig, i)));
                                 }
                             }
-                            connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetVersionMessage(msg.MsgID, embeddedConfig, 0x01)));
+                            connector.SendMessage(MessageCodec.EncodeMessage(TemplateProvider.GetVersionMessage(msg.MsgID, embeddedConfig, 0x00)));
                             break;
                         case Command.GetInfo:
                             SendTrace(EmbeddedDebugger.DebugProtocol.Enums.TraceLevel.Error, "Info has been called");
@@ -274,7 +275,7 @@ namespace EmbeddedEmulator.Model
         private void DispatchConfigChannelMessage(ProtocolMessage msg)
         {
             ProtocolMessage returnMsg = new ProtocolMessage(msg.ControllerID, msg.MsgID, Command.ConfigChannel, new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
-            if (msg.ControllerID != 0x01) { connector.SendMessage(MessageCodec.EncodeMessage(returnMsg)); return; }
+            if (msg.ControllerID != 0x00) { connector.SendMessage(MessageCodec.EncodeMessage(returnMsg)); return; }
             if (msg.CommandData.Length < 1)
             {
                 returnMsg = new ProtocolMessage(msg.ControllerID, msg.MsgID, Command.ConfigChannel);

@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs
+/EmbeddedEmulator/bin/Debug
+/EmbeddedEmulator/obj
