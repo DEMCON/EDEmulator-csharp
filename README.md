@@ -1,3 +1,6 @@
+
+DEPRECATED REPO! Will be merged into: https://github.com/DEMCON/EDApplication-csharp
+
 # EDEmulator
 Embedded debug device emulator
 
